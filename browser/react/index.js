@@ -4,13 +4,15 @@ import { Router, Route, hashHistory, IndexRedirect } from 'react-router';
 
 import AppContainer from './containers/AppContainer';
 import Albums from './components/Albums';
+import Album from './components/Album';
 
 ReactDOM.render(
   <div>
     <Router history={hashHistory}>
       <Route path="/" component={AppContainer}>
-        <IndexRedirect to="/Albums" />
-        <Route path="/Albums" component={Albums} />
+        <IndexRedirect to="/albums" />
+        <Route path="/albums" component={Albums} />
+        <Route path="albums/:albumId" component={Album} />
       </Route>
     </Router>
   </div>,

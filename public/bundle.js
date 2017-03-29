@@ -28518,7 +28518,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Songs = function Songs(props) {
-	
+	  console.log(props);
 	  var songs = props.songs;
 	  var currentSong = props.currentSong;
 	  var isPlaying = props.isPlaying;
@@ -28858,6 +28858,10 @@
 	
 	var _Albums2 = _interopRequireDefault(_Albums);
 	
+	var _Songs = __webpack_require__(263);
+	
+	var _Songs2 = _interopRequireDefault(_Songs);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28886,8 +28890,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -28896,120 +28898,8 @@
 	          null,
 	          this.props.selectedArtist.name
 	        ),
-	        _react2.default.createElement(
-	          'h4',
-	          null,
-	          'Albums'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          this.props.artistAlbums.map(function (album) {
-	            return _react2.default.createElement(
-	              'div',
-	              { className: 'col-xs-4', key: album.id },
-	              _react2.default.createElement(
-	                _reactRouter.Link,
-	                { to: '/albums/' + album.id, className: 'thumbnail' },
-	                _react2.default.createElement('img', { src: album.imageUrl }),
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'caption' },
-	                  _react2.default.createElement(
-	                    'h5',
-	                    null,
-	                    _react2.default.createElement(
-	                      'span',
-	                      null,
-	                      album.name
-	                    )
-	                  ),
-	                  _react2.default.createElement(
-	                    'small',
-	                    null,
-	                    album.songs.length,
-	                    ' songs'
-	                  )
-	                )
-	              )
-	            );
-	          })
-	        ),
-	        _react2.default.createElement(
-	          'h4',
-	          null,
-	          'SONGS'
-	        ),
-	        _react2.default.createElement(
-	          'table',
-	          { className: 'table' },
-	          _react2.default.createElement(
-	            'thead',
-	            null,
-	            _react2.default.createElement(
-	              'tr',
-	              null,
-	              _react2.default.createElement('th', null),
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Name'
-	              ),
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Artists'
-	              ),
-	              _react2.default.createElement(
-	                'th',
-	                null,
-	                'Genre'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'tbody',
-	            null,
-	            this.props.artistSongs && this.props.artistSongs.map(function (song) {
-	              return _react2.default.createElement(
-	                'tr',
-	                { key: song.id },
-	                _react2.default.createElement(
-	                  'td',
-	                  null,
-	                  _react2.default.createElement(
-	                    'button',
-	                    { className: 'btn btn-default btn-xs', onClick: function onClick() {
-	                        return _this2.props.toggle(song, songs);
-	                      } },
-	                    _react2.default.createElement('span', { className: song.id === _this2.props.currentSong.id && _this2.props.isPlaying ? "glyphicon glyphicon-pause" : "glyphicon glyphicon-play" })
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'td',
-	                  null,
-	                  song.name
-	                ),
-	                _react2.default.createElement(
-	                  'td',
-	                  null,
-	                  _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    song.artists ? song.artists.map(function (artist) {
-	                      return artist.name;
-	                    }).join(', ') : null
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'td',
-	                  null,
-	                  song.genre
-	                )
-	              );
-	            })
-	          )
-	        )
+	        _react2.default.createElement(_Albums2.default, { albums: this.props.artistAlbums }),
+	        _react2.default.createElement(_Songs2.default, { songs: this.props.artistSongs, currentSong: this.props.currentSong, isPlaying: this.props.isPlaying, toggleOne: this.props.toggleOne })
 	      );
 	    }
 	  }]);

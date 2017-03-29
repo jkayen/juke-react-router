@@ -16,7 +16,7 @@ export default class Album extends React.Component {
 
   }
 
-  
+
     componentDidMount () {
       const albumId = this.props.routeParams.albumId;
       const selectAlbum = this.props.selectAlbum;
@@ -27,7 +27,6 @@ export default class Album extends React.Component {
     render () {
       return (
          <div className="album">
-            {console.log(this.props)}
               <div>
                 <h3>{ this.props.album.name }</h3>
                 <img src={ this.props.album.imageUrl } className="img-thumbnail" />
@@ -40,6 +39,5 @@ export default class Album extends React.Component {
         </div>
       );
     }
-   
+
   }
-  

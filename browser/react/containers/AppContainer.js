@@ -23,12 +23,21 @@ export default class AppContainer extends Component {
     this.prev = this.prev.bind(this);
     this.selectAlbum = this.selectAlbum.bind(this);
     this.deselectAlbum = this.deselectAlbum.bind(this);
+    this.selectArtist = this.selectArtist.bind(this);
+    this.selectArtistAlbums = this.selectArtistAlbums.bind(this);
+    this.selectArtistSongs = this.selectArtistSongs.bind(this);
   }
 
   componentDidMount () {
     axios.get('/api/albums/')
       .then(res => res.data)
       .then(album => this.onLoad(convertAlbums(album)));
+
+    axios.get('/api/artists/')
+      .then(res => res.data)
+      .then(data => {
+        this.setState({artists: data})
+      });
 
     AUDIO.addEventListener('ended', () =>
       this.next());
@@ -102,6 +111,30 @@ export default class AppContainer extends Component {
     this.setState({ selectedAlbum: {}});
   }
 
+  selectArtist (artistId) {
+    axios.get(`/api/artists/${artistId}`)
+      .then(res => res.data)
+      .then(artist => this.setState({
+        selectedArtist: artist
+      }));
+  }
+
+  selectArtistAlbums (artistId) {
+    axios.get(`/api/artists/${artistId}/albums`)
+      .then(res => res.data)
+      .then(albums => {
+        this.setState({artistAlbums: convertAlbums(albums)})
+      });
+  }
+
+  selectArtistSongs (artistId) {
+    axios.get(`/api/artists/${artistId}/songs`)
+      .then(res => res.data)
+      .then(songs => {
+        this.setState({artistSongs: songs})
+      });
+  }
+
   render () {
     return (
       <div id="main" className="container-fluid">
@@ -117,7 +150,14 @@ export default class AppContainer extends Component {
               isPlaying: this.state.isPlaying,
               toggleOne: this.toggleOne,
               albums: this.state.albums,
-              selectAlbum: this.selectAlbum
+              selectAlbum: this.selectAlbum,
+              artists: this.state.artists,
+              selectedArtist: this.state.selectedArtist,
+              selectArtist: this.selectArtist,
+              selectArtistAlbums: this.selectArtistAlbums,
+              artistAlbums: this.state.artistAlbums,
+              selectArtistSongs: this.selectArtistSongs,
+              artistSongs: this.state.artistSongs
             })
             : null
         }

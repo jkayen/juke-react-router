@@ -76,6 +76,10 @@
 	
 	var _Artist2 = _interopRequireDefault(_Artist);
 	
+	var _Songs = __webpack_require__(263);
+	
+	var _Songs2 = _interopRequireDefault(_Songs);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_reactDom2.default.render(_react2.default.createElement(
@@ -91,7 +95,12 @@
 	      _react2.default.createElement(_reactRouter.Route, { path: '/albums', component: _Albums2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/albums/:albumId', component: _Album2.default }),
 	      _react2.default.createElement(_reactRouter.Route, { path: '/artists', component: _Artists2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: '/artists/:artistId', component: _Artist2.default })
+	      _react2.default.createElement(
+	        _reactRouter.Route,
+	        { path: '/artists/:artistId', component: _Artist2.default },
+	        _react2.default.createElement(_reactRouter.Route, { path: '/artists/:artistId/albums', component: _Albums2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: '/artists/:artistId/songs', component: _Songs2.default })
+	      )
 	    )
 	  )
 	), document.getElementById('app'));
@@ -28854,14 +28863,6 @@
 	
 	var _reactRouter = __webpack_require__(178);
 	
-	var _Albums = __webpack_require__(261);
-	
-	var _Albums2 = _interopRequireDefault(_Albums);
-	
-	var _Songs = __webpack_require__(263);
-	
-	var _Songs2 = _interopRequireDefault(_Songs);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28876,16 +28877,24 @@
 	  function Artist(props) {
 	    _classCallCheck(this, Artist);
 	
-	    return _possibleConstructorReturn(this, (Artist.__proto__ || Object.getPrototypeOf(Artist)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Artist.__proto__ || Object.getPrototypeOf(Artist)).call(this, props));
+	
+	    _this.artistId = _this.props.routeParams.artistId;
+	    _this.children = _this.props.children;
+	    _this.propsToPassToChildren = {
+	      selectedArtist: _this.props.selectedArtist,
+	      artistAlbums: _this.props.artistAlbums,
+	      artistSongs: _this.props.artistSongs
+	    };
+	    return _this;
 	  }
 	
 	  _createClass(Artist, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var artistId = this.props.routeParams.artistId;
-	      this.props.selectArtist(artistId);
-	      this.props.selectArtistAlbums(artistId);
-	      this.props.selectArtistSongs(artistId);
+	      this.props.selectArtist(this.artistId);
+	      this.props.selectArtistAlbums(this.artistId);
+	      this.props.selectArtistSongs(this.artistId);
 	    }
 	  }, {
 	    key: 'render',
@@ -28893,13 +28902,35 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        console.log(this.props),
 	        _react2.default.createElement(
 	          'h3',
 	          null,
 	          this.props.selectedArtist.name
 	        ),
-	        _react2.default.createElement(_Albums2.default, { albums: this.props.artistAlbums }),
-	        _react2.default.createElement(_Songs2.default, { songs: this.props.artistSongs, currentSong: this.props.currentSong, isPlaying: this.props.isPlaying, toggleOne: this.props.toggleOne })
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'nav nav-tabs' },
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/artists/' + this.artistId + '/albums' },
+	              'ALBUMS'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(
+	              _reactRouter.Link,
+	              { to: '/artists/' + this.artistId + '/songs' },
+	              'SONGS'
+	            )
+	          )
+	        ),
+	        this.props.children && _react2.default.cloneElement(this.props.children, this.propsToPassToChildren)
 	      );
 	    }
 	  }]);
